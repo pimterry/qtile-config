@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 from libqtile.config import Key, Screen, Group
 from libqtile.command import lazy
 from libqtile import layout, bar, widget
@@ -91,11 +93,20 @@ screens = [
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
-                widget.TextBox("default config", name="default"),
+                widget.Sep(),
+                widget.Notify(),
                 widget.Systray(),
+                widget.Battery(battery_name='BAT1',
+                               energy_now_file='charge_now',
+                               energy_full_file='charge_full',
+                               power_now_file='current_now',
+                               update_delay=1,
+                               charge_char=u"↑",
+                               discharge_char=u"↓",
+                               format='{char} {percent:2.0%}'),
                 widget.Clock('%Y-%m-%d %a %I:%M %p'),
             ],
-            30,
+            26,
         ),
     ),
 ]
