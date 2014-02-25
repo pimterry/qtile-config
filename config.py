@@ -6,11 +6,12 @@ from libqtile import layout, bar, widget
 import sh
 
 def ensure_running(proc_name, run_proc):
-  try:
-    sh.pidof(proc_name)
-    return lambda: None
-  except ErrorReturnCode:
-    return run_proc
+  def start_if_required():
+    try:
+      sh.pidof(proc_name)
+    except sh.ErrorReturnCode:
+      run_proc()
+  return start_if_required
 
 startup_apps = [lambda: sh.xrandr(s='1920x1080'),
                 ensure_running("gnome-settings-daemon",
