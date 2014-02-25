@@ -20,10 +20,12 @@ startup_apps = [lambda: sh.xrandr(s='1920x1080'),
                 lambda: sh.dropbox("start", _bg=True)]
 
 mod = "mod4"
+alt = "mod1"
+control = "control"
 
 keys = [
     # Log out
-    Key([mod, "control"], "Escape", lazy.shutdown()),
+    Key([mod, control], "Escape", lazy.shutdown()),
 
     # Run shortcuts
     Key([mod], "t", lazy.spawn("gnome-terminal")),
@@ -31,7 +33,8 @@ keys = [
     Key([mod], "c", lazy.spawn("google-chrome")),
     Key([mod], "v", lazy.spawn("gvim")),
     Key([mod], "r", lazy.spawncmd()),
-    
+    Key([control, mod, alt], "l", lazy.spawn("gnome-screensaver-command --lock")),
+
     # Quit window
     Key([mod], "q", lazy.window.kill()),
 
