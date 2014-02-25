@@ -5,9 +5,17 @@ from libqtile.command import lazy
 from libqtile import layout, bar, widget
 import sh
 
-startup_apps = [lambda: sh.gnome_settings_daemon(_bg=True),
-                lambda: sh.xrandr(s='1920x1080'),
-                lambda: sh.launchy(_bg=True),
+def ensure_running(proc_name, run_proc):
+  try:
+    sh.pidof(proc_name)
+    return lambda: None
+  except ErrorReturnCode:
+    return run_proc
+
+startup_apps = [lambda: sh.xrandr(s='1920x1080'),
+                ensure_running("gnome-settings-daemon",
+                               lambda: sh.gnome_settings_daemon(_bg=True)),
+                ensure_running("launchy", lambda: sh.launchy(_bg=True)),
                 lambda: sh.dropbox("start", _bg=True)]
 
 mod = "mod4"
