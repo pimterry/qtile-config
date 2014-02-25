@@ -88,12 +88,13 @@ layouts = [
 
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
                 widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
                 widget.Sep(),
+                widget.TaskList(),
+                widget.Sep(),
+                widget.Prompt(),
                 widget.Notify(),
                 widget.Systray(),
                 widget.Battery(battery_name='BAT1',
