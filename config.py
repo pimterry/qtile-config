@@ -64,14 +64,14 @@ keys = [
 ]
 
 groups = [
-    Group("a"),
-    Group("s"),
-    Group("d"),
-    Group("f"),
-    Group("u"),
-    Group("i"),
-    Group("o"),
-    Group("p"),
+    Group("1"),
+    Group("2"),
+    Group("3"),
+    Group("4"),
+    Group("5"),
+    Group("6"),
+    Group("7"),
+    Group("8"),
 ]
 for i in groups:
     # mod1 + letter of group = switch to group
