@@ -22,6 +22,9 @@ startup_apps = [lambda: sh.xrandr(s='1920x1080'),
 mod = "mod4"
 
 keys = [
+    # Log out
+    Key([mod, "control"], "Escape", lazy.shutdown()),
+
     # Switch between windows in current stack pane
     Key(
         [mod], "k",
