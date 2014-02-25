@@ -3,6 +3,12 @@
 from libqtile.config import Key, Screen, Group
 from libqtile.command import lazy
 from libqtile import layout, bar, widget
+import sh
+
+startup_apps = [lambda: sh.gnome_settings_daemon(_bg=True),
+                lambda: sh.xrandr(s='1920x1080'),
+                lambda: sh.launchy(_bg=True),
+                lambda: sh.dropbox("start", _bg=True)]
 
 mod = "mod4"
 
@@ -112,7 +118,10 @@ screens = [
     ),
 ]
 
-main = None
+def main(qtile):
+  for start_app in startup_apps:
+    start_app()
+
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
