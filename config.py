@@ -25,6 +25,17 @@ keys = [
     # Log out
     Key([mod, "control"], "Escape", lazy.shutdown()),
 
+    # Run shortcuts
+    Key([mod], "t", lazy.spawn("gnome-terminal")),
+    Key([mod], "h", lazy.spawn("thunar")),
+    Key([mod], "c", lazy.spawn("google-chrome")),
+    Key([mod], "v", lazy.spawn("gvim")),
+    Key([mod], "r", lazy.spawncmd()),
+    
+    # Quit window
+    Key([mod], "q", lazy.window.kill()),
+
+
     # Switch between windows in current stack pane
     Key(
         [mod], "k",
@@ -72,7 +83,6 @@ keys = [
     Key([mod], "w",      lazy.window.kill()),
 
     Key([mod, "control"], "r", lazy.restart()),
-    Key([mod], "r", lazy.spawncmd()),
 ]
 
 groups = [
