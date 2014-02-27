@@ -5,6 +5,14 @@ from libqtile.command import lazy
 from libqtile import layout, bar, widget
 import sh
 
+follow_mouse_focus = True
+bring_front_click = False
+cursor_warp = False
+floating_layout = layout.Floating()
+mouse = ()
+auto_fullscreen = True
+widget_defaults = {}
+
 def ensure_running(proc_name, run_proc):
   def start_if_required():
     try:
@@ -18,6 +26,48 @@ startup_apps = [lambda: sh.xrandr(s='1920x1080'),
                                lambda: sh.gnome_settings_daemon(_bg=True)),
                 ensure_running("launchy", lambda: sh.launchy(_bg=True)),
                 lambda: sh.dropbox("start", _bg=True)]
+
+def main(qtile):
+  for start_app in startup_apps:
+    start_app()
+
+groups = [
+    Group("1"),
+    Group("2"),
+    Group("3"),
+    Group("4"),
+    Group("5"),
+    Group("6"),
+    Group("7"),
+    Group("8"),
+]
+
+dgroups_key_binder = None
+dgroups_app_rules = []
+
+layouts = [
+    layout.Max(),
+    layout.MonadTall()
+]
+
+screens = [Screen(top=bar.Bar([
+                      widget.GroupBox(),
+                      widget.Sep(),
+                      widget.TaskList(),
+                      widget.Sep(),
+                      widget.Prompt(),
+                      widget.Notify(),
+                      widget.Systray(),
+                      widget.Battery(battery_name='BAT1',
+                                     energy_now_file='charge_now',
+                                     energy_full_file='charge_full',
+                                     power_now_file='current_now',
+                                     update_delay=1,
+                                     charge_char=u"↑",
+                                     discharge_char=u"↓",
+                                     format='{char} {percent:2.0%}'),
+                      widget.Clock('%Y-%m-%d %a %I:%M %p'),
+                  ], 26, ))]
 
 mod = "mod4"
 alt = "mod1"
@@ -38,7 +88,6 @@ keys = [
     # Quit window
     Key([mod], "q", lazy.window.kill()),
 
-
     Key([mod], "j", lazy.layout.down()),
     Key([mod], "k", lazy.layout.up()),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
@@ -49,16 +98,6 @@ keys = [
     Key([mod, "control"], "r", lazy.restart()),
 ]
 
-groups = [
-    Group("1"),
-    Group("2"),
-    Group("3"),
-    Group("4"),
-    Group("5"),
-    Group("6"),
-    Group("7"),
-    Group("8"),
-]
 for i in groups:
     # mod1 + letter of group = switch to group
     keys.append(
@@ -69,49 +108,3 @@ for i in groups:
     keys.append(
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name))
     )
-
-dgroups_key_binder = None
-dgroups_app_rules = []
-
-layouts = [
-    layout.Max(),
-    layout.MonadTall()
-]
-
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.GroupBox(),
-                widget.Sep(),
-                widget.TaskList(),
-                widget.Sep(),
-                widget.Prompt(),
-                widget.Notify(),
-                widget.Systray(),
-                widget.Battery(battery_name='BAT1',
-                               energy_now_file='charge_now',
-                               energy_full_file='charge_full',
-                               power_now_file='current_now',
-                               update_delay=1,
-                               charge_char=u"↑",
-                               discharge_char=u"↓",
-                               format='{char} {percent:2.0%}'),
-                widget.Clock('%Y-%m-%d %a %I:%M %p'),
-            ],
-            26,
-        ),
-    ),
-]
-
-def main(qtile):
-  for start_app in startup_apps:
-    start_app()
-
-follow_mouse_focus = True
-bring_front_click = False
-cursor_warp = False
-floating_layout = layout.Floating()
-mouse = ()
-auto_fullscreen = True
-widget_defaults = {}
