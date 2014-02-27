@@ -82,7 +82,7 @@ keys = [
 
     # Run shortcuts
     Key([mod], "t", lazy.spawn("gnome-terminal")),
-    Key([mod], "h", lazy.spawn("thunar")),
+    Key([mod], "e", lazy.spawn("thunar")),
     Key([mod], "c", lazy.spawn("google-chrome")),
     Key([mod], "v", lazy.spawn("gvim")),
     Key([mod], "r", lazy.spawncmd()),
