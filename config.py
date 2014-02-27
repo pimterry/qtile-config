@@ -21,7 +21,8 @@ def ensure_running(proc_name, run_proc):
       run_proc()
   return start_if_required
 
-startup_apps = [lambda: sh.xrandr(s='1920x1080'),
+startup_apps = [lambda: sh.wmname("LG3D"),
+                lambda: sh.xrandr(s='1920x1080'),
                 ensure_running("gnome-settings-daemon",
                                lambda: sh.gnome_settings_daemon(_bg=True)),
                 ensure_running("launchy", lambda: sh.launchy(_bg=True)),
