@@ -2,7 +2,7 @@
 
 from libqtile.config import Key, Screen, Group
 from libqtile.command import lazy
-from libqtile import layout, bar, widget
+from libqtile import layout, bar, widget, hook
 import sh
 
 follow_mouse_focus = True
@@ -30,6 +30,12 @@ startup_apps = [lambda: sh.xrandr(s='1920x1080'),
 def main(qtile):
   for start_app in startup_apps:
     start_app()
+
+@hook.subscribe.client_new
+def dialogs(window):
+    if(window.window.get_wm_type() == 'dialog'
+        or window.window.get_wm_transient_for()):
+        window.floating = True
 
 groups = [
     Group("1"),
@@ -72,6 +78,7 @@ screens = [Screen(top=bar.Bar([
 mod = "mod4"
 alt = "mod1"
 control = "control"
+shift = "shift"
 
 keys = [
     # Log out
@@ -90,8 +97,8 @@ keys = [
 
     Key([mod], "j", lazy.layout.down()),
     Key([mod], "k", lazy.layout.up()),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
+    Key([mod, shift], "j", lazy.layout.shuffle_down()),
+    Key([mod, shift], "k", lazy.layout.shuffle_up()),
 
     Key([mod], "h", lazy.screen.prevgroup()),
     Key([mod], "l", lazy.screen.nextgroup()),
@@ -109,5 +116,5 @@ for i in groups:
 
     # mod1 + shift + letter of group = switch to & move focused window to group
     keys.append(
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name))
+        Key([mod, shift], i.name, lazy.window.togroup(i.name))
     )
