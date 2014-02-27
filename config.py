@@ -47,7 +47,7 @@ dgroups_app_rules = []
 
 layouts = [
     layout.Max(),
-    layout.MonadTall()
+    layout.MonadTall(border_width=1, border_focus="#dddddd")
 ]
 
 screens = [Screen(top=bar.Bar([
