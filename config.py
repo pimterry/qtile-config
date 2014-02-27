@@ -25,6 +25,7 @@ startup_apps = [lambda: sh.wmname("LG3D"),
                 lambda: sh.xrandr(s='1920x1080'),
                 ensure_running("gnome-settings-daemon",
                                lambda: sh.gnome_settings_daemon(_bg=True)),
+                ensure_running("nm-applet", lambda: sh.nm_applet(_bg=True)),
                 ensure_running("launchy", lambda: sh.launchy(_bg=True)),
                 lambda: sh.dropbox("start", _bg=True)]
 
@@ -104,7 +105,7 @@ keys = [
     # Manage workspaces
     Key([mod], "h", lazy.screen.prevgroup()),
     Key([mod], "l", lazy.screen.nextgroup()),
-    Key([mod], "m",    lazy.nextlayout()),
+    Key([mod], "m", lazy.nextlayout()),
 
     Key([mod, "control"], "r", lazy.restart()),
 ]
