@@ -92,6 +92,9 @@ keys = [
     Key([mod], "k", lazy.layout.up()),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
+
+    Key([mod], "h", lazy.screen.prevgroup()),
+    Key([mod], "l", lazy.screen.nextgroup()),
     
     Key([mod], "m",    lazy.nextlayout()),
 
