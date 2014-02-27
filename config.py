@@ -57,7 +57,7 @@ layouts = [
 ]
 
 screens = [Screen(top=bar.Bar([
-                      widget.GroupBox(),
+                      widget.GroupBox(fontsize=12),
                       widget.Sep(),
                       widget.TaskList(),
                       widget.Sep(),
