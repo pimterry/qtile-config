@@ -92,17 +92,18 @@ keys = [
     # Quit window
     Key([mod], "q", lazy.window.kill()),
 
+    # Move windows around
     Key([mod], "j", lazy.layout.down()),
     Key([mod], "k", lazy.layout.up()),
     Key([mod, shift], "j", lazy.layout.shuffle_down()),
     Key([mod, shift], "k", lazy.layout.shuffle_up()),
-
-    Key([mod], "h", lazy.screen.prevgroup()),
-    Key([mod], "l", lazy.screen.nextgroup()),
     Key([control, mod], "n", lazy.layout.normalize()),
     Key([control, mod], "k", lazy.layout.grow()),
     Key([control, mod], "j", lazy.layout.shrink()),
-    
+
+    # Manage workspaces
+    Key([mod], "h", lazy.screen.prevgroup()),
+    Key([mod], "l", lazy.screen.nextgroup()),
     Key([mod], "m",    lazy.nextlayout()),
 
     Key([mod, "control"], "r", lazy.restart()),
