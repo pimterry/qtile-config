@@ -99,6 +99,9 @@ keys = [
 
     Key([mod], "h", lazy.screen.prevgroup()),
     Key([mod], "l", lazy.screen.nextgroup()),
+    Key([control, mod], "n", lazy.layout.normalize()),
+    Key([control, mod], "k", lazy.layout.grow()),
+    Key([control, mod], "j", lazy.layout.shrink()),
     
     Key([mod], "m",    lazy.nextlayout()),
 
