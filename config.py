@@ -55,9 +55,9 @@ layouts = [
 ]
 
 screens = [Screen(top=bar.Bar([
-                      widget.GroupBox(fontsize=12),
+                      widget.GroupBox(fontsize=12, borderwidth=2),
                       widget.Sep(),
-                      widget.TaskList(),
+                      widget.TaskList(fontsize=12, padding=4, borderwidth=2),
                       widget.Sep(),
                       widget.Prompt(),
                       widget.Notify(),
@@ -69,9 +69,11 @@ screens = [Screen(top=bar.Bar([
                                      update_delay=1,
                                      charge_char=u"↑",
                                      discharge_char=u"↓",
-                                     format='{char} {percent:2.0%}'),
-                      widget.Clock('%Y-%m-%d %a %I:%M %p'),
-                  ], 26, ))]
+                                     format='{char} {percent:2.0%}',
+                                     fontsize=12),
+                      widget.Clock('%Y-%m-%d %a %I:%M %p',
+                                   fontsize=12),
+                  ], 22))]
 
 mod = "mod4"
 alt = "mod1"
