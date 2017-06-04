@@ -21,13 +21,11 @@ def ensure_running(proc_name, run_proc):
       run_proc()
   return start_if_required
 
-startup_apps = [lambda: sh.wmname("LG3D"),
-                lambda: sh.xrandr(s='1920x1080'),
-                ensure_running("gnome-settings-daemon",
-                               lambda: sh.gnome_settings_daemon(_bg=True)),
-                ensure_running("nm-applet", lambda: sh.nm_applet(_bg=True)),
-                ensure_running("launchy", lambda: sh.launchy(_bg=True)),
-                lambda: sh.dropbox("start", _bg=True)]
+startup_apps = [
+    ensure_running("gnome-keyring-daemon", lambda: sh.gnome_session(_bg=True)),
+    ensure_running("nm-applet", lambda: sh.nm_applet(_bg=True)),
+    lambda: sh.seafile("start", _bg=True)
+]
 
 def main(qtile):
   for start_app in startup_apps:
@@ -62,7 +60,10 @@ screens = [Screen(top=bar.Bar([
                       widget.Prompt(),
                       widget.Notify(),
                       widget.Systray(),
-                      widget.Battery(battery_name='BAT1',
+                      widget.Volume(fontsize=12),
+                      widget.Backlight(backlight_name='intel_backlight',
+                                       fontsize=12),
+                      widget.Battery(battery_name='BAT0',
                                      energy_now_file='charge_now',
                                      energy_full_file='charge_full',
                                      power_now_file='current_now',
@@ -71,9 +72,10 @@ screens = [Screen(top=bar.Bar([
                                      discharge_char=u"↓",
                                      format='{char} {percent:2.0%}',
                                      fontsize=12),
-                      widget.Clock('%Y-%m-%d %a %I:%M %p',
+                      widget.Clock(format='%Y-%m-%d %a %I:%M %p',
                                    fontsize=12),
-                  ], 22))]
+                  ], 22)),
+            Screen()]
 
 mod = "mod4"
 alt = "mod1"
@@ -84,18 +86,28 @@ keys = [
     # Log out
     Key([mod, control], "Escape", lazy.shutdown()),
 
+    # Device shortcuts
+    Key([], "XF86AudioRaiseVolume",
+        lazy.spawn("amixer -q set Master 3dB+")),
+    Key([], "XF86AudioLowerVolume",
+        lazy.spawn("amixer -q set Master 3dB-")),
+    Key([], "XF86AudioMute",
+        lazy.spawn("amixer -D pulse set Master toggle")),
+
     # Run shortcuts
     Key([mod], "t", lazy.spawn("gnome-terminal")),
     Key([mod], "e", lazy.spawn("thunar")),
     Key([mod], "c", lazy.spawn("google-chrome")),
     Key([mod], "v", lazy.spawn("gvim")),
-    Key([mod], "r", lazy.spawncmd()),
+    Key([mod], "r", lazy.spawn("dmenu_run -fn 'Fira Code' -p '>'")),
     Key([control, mod, alt], "l", lazy.spawn("gnome-screensaver-command --lock")),
 
     # Quit window
     Key([mod], "q", lazy.window.kill()),
 
     # Move windows around
+    Key([alt], "Tab", lazy.layout.down()),
+    Key([alt, shift], "Tab", lazy.layout.up()),
     Key([mod], "j", lazy.layout.down()),
     Key([mod], "k", lazy.layout.up()),
     Key([mod, shift], "j", lazy.layout.shuffle_down()),
@@ -105,9 +117,11 @@ keys = [
     Key([control, mod], "j", lazy.layout.shrink()),
 
     # Manage workspaces
-    Key([mod], "h", lazy.screen.prevgroup()),
-    Key([mod], "l", lazy.screen.nextgroup()),
-    Key([mod], "m", lazy.nextlayout()),
+    Key([mod], "Tab", lazy.screen.next_group()),
+    Key([mod, shift], "Tab", lazy.screen.prev_group()),
+    Key([mod], "l", lazy.screen.next_group()),
+    Key([mod], "h", lazy.screen.prev_group()),
+    Key([mod], "m", lazy.next_layout()),
 
     Key([mod, "control"], "r", lazy.restart()),
 ]
