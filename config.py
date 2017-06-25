@@ -67,8 +67,6 @@ screens = [Screen(top=bar.Bar([
                       widget.Notify(),
                       widget.Systray(),
                       widget.Volume(fontsize=12),
-                      widget.Backlight(backlight_name='intel_backlight',
-                                       fontsize=12),
                       widget.Battery(battery_name='BAT0',
                                      energy_now_file='charge_now',
                                      energy_full_file='charge_full',
@@ -99,6 +97,9 @@ keys = [
         lazy.spawn("amixer -q set Master 3dB-")),
     Key([], "XF86AudioMute",
         lazy.spawn("amixer -D pulse set Master toggle")),
+
+    Key([], "XF86MonBrightnessUp", lazy.spawn("acpilight -inc 10")),
+    Key([], "XF86MonBrightnessDown", lazy.spawn("acpilight -dec 10")),
 
     # Run shortcuts
     Key([mod], "t", lazy.spawn("gnome-terminal")),
