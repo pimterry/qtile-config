@@ -25,7 +25,8 @@ startup_apps = [
     lambda: sh.xsetroot('-cursor_name', 'left_ptr', '-solid', '#000000'),
     ensure_running("gnome-keyring-daemon", lambda: sh.gnome_session(_bg=True)),
     ensure_running("nm-applet", lambda: sh.nm_applet(_bg=True)),
-    lambda: sh.seafile("start", _bg=True)
+    lambda: sh.seafile("start", _bg=True),
+    lambda: sh.emoji_keyboard(_bg=True)
 ]
 
 def main(qtile):
@@ -123,6 +124,9 @@ keys = [
     Key([mod], "l", lazy.screen.next_group()),
     Key([mod], "h", lazy.screen.prev_group()),
     Key([mod], "m", lazy.next_layout()),
+
+    # Multimedia keys
+    Key([control, mod], "space", lazy.spawn('emoji-keyboard -s')),
 
     Key([mod, "control"], "r", lazy.restart()),
 ]
