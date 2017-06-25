@@ -131,6 +131,13 @@ keys = [
     Key([mod], "m", lazy.next_layout()),
 
     # Multimedia keys
+    Key([], "XF86AudioPlay", lazy.spawn('playerctl play-pause')),
+    Key([], "XF86AudioPrev", lazy.spawn('playerctl previous')),
+    Key([], "XF86AudioNext", lazy.spawn('playerctl next')),
+
+    Key([], "Print", lazy.spawn('gnome-screenshot')),
+    Key([control], "Print", lazy.spawn('gnome-screenshot -a')),
+
     Key([control, mod], "space", lazy.spawn('emoji-keyboard -s')),
 
     Key([mod, "control"], "r", lazy.restart()),
