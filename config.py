@@ -22,6 +22,7 @@ def ensure_running(proc_name, run_proc):
   return start_if_required
 
 startup_apps = [
+    lambda: sh.xsetroot('-cursor_name', 'left_ptr', '-solid', '#000000'),
     ensure_running("gnome-keyring-daemon", lambda: sh.gnome_session(_bg=True)),
     ensure_running("nm-applet", lambda: sh.nm_applet(_bg=True)),
     lambda: sh.seafile("start", _bg=True)
